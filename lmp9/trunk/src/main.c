@@ -13,20 +13,37 @@ int main(int argc, char ** argv) {
 
 	if (A == NULL) return -1;
 	if (b == NULL) return -2;
+	printf("\nMacierz A to:\n");
 	printToScreen(A);
+	printf("\nMacierz b to:\n");
 	printToScreen(b);
 
 	res = eliminate(A,b);
+	if(res == 1)
+	{
+		printf("\nBłąd, nieprawdidłowa wczytana macierz - element na diagonali = 0\n");
+		return 1;
+	}
 	x = createMatrix(b->r, 1);
 	if (x != NULL) {
 		res = backsubst(x,A,b);
+		if(res == 1)
+		{
+			printf("\nBłąd, nieprawdidłowa wczytana macierz - element na diagonali = 0\n");
+			return 1;
+		}
+		if(res == 2)
+		{
+			printf("\nBłąd, wczytana macierz jest nieprawidłowych rozmiarów\n");
+			return 1;
+		}
 
+		printf("\nWyniki(x) to:\n");
 		printToScreen(x);
 	  freeMatrix(x);
 	} else {
 					fprintf(stderr,"Błąd! Nie mogłem utworzyć wektora wynikowego x.\n");
 	}
-
 	freeMatrix(A);
 	freeMatrix(b);
 
